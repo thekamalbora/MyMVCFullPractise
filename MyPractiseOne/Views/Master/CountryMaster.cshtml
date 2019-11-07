@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "CountryMaster";
+}
+<script src="~/scripts/jquery.min.js"></script>
+<br /><br />
+    <div>
+        <table>
+            <tr>
+                <td></td>
+                <td><input type="hidden" id="hfCountryID" value="0" /></td>
+            </tr>
+            <tr>
+
+                <td>Country Code:</td>
+                <td><input type="text" id="txtCountryCode" /></td>
+            </tr>
+            <tr>
+                <td>Country Name:</td>
+                <td><input type="text" id="txtCountryName" /></td>
+            </tr>
+            <tr>
+                <td>IsActive:</td>
+                <td><input type="checkbox" name="chkbox" id="chckIsAactive" value="0" /></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="button" id="btnSave" value="Save" /></td>
+            </tr>
+        </table>
+    </div>
+
+<div>
+    <label id="lbGetCountryData"></label>
+</div>
+
+<div class="container">
+    <h2 class="text-center text-uppercase pt-4">User Record</h2>
+    <hr class="w-50 mx-auto pb-3 border-dark" />
+    <table class="table table-responsive table-stripped mytable" id="tbl">
+        <tr>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Country&nbsp;Code</th>
+            <th scope="col">Country&nbsp;Name</th>
+            <th scope="col">IsActive</th>
+
+        </tr>
+    </table>
+</div>
+<div class="=container col-6">
+  <label id="lbCountryDetails"></label>
+</div>
+<script src="~/scripts/CountryMaster.js"></script>

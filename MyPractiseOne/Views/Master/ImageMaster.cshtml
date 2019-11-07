@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "ImageMaster";
+}
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready()
+    {
+        GetImage();
+    }
+    $(function () {
+        var reader = new FileReader();
+        var fileName;
+        var contentType;
+        $('input[type=file]').change(function () {
+            if (typeof (FileReader) != "undefined") {
+                var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+                $($(this)[0].files).each(function () {
+                    var file = $(this);
+                    if (regex.test(file[0].name.toLowerCase())) {
+                        fileName = file[0].name;
+                        contentType = file[0].type;
+                        reader.readAsDataURL(file[0]);
+                    } else {
+                        alert(file[0].name + " is not a valid image file.");
+                        return false;
+                    }
+                });
+            } else {
+                alert("This browser does not support HTML5 FileReader.");
+            }
+        });
+
+        $('#btnUpload').on("click", function () {
+            var byteData = reader.result;
+            byteData = byteData.split(';')[1].replace("base64,", "");
+            $.ajax({
+                type: "POST",
+                url: "/Master/SaveImage",
+                data: {byteData:byteData,imageName:fileName,contentType:contentType},
+                success: function (response) { alert(response); },
+                error: function (response) { alert(response.responseText); }
+            });
+            return false;
+        });
+      
+ 
+        
+ 
+      
+ 
+      
+    });
+
+    function GetImage() {
+
+        $.ajax({
+            url: GlobalURL + "Master/GetImage",
+            type: "POST",
+            data: {},
+            success: function (data) {
+
+                $("#imgget").html(data.Grid);
+            },
+            error: function () {
+                alert("Image  Not Load");
+            }
+        })
+    }
+
+</script>
+
+<br /><br />
+<div>
+    <input type="file" name="FileUpload1" id="FileUpload1" multiple="multiple" />
+    <br />
+    <br />
+    <input type="button" name="btnSave" value="Save" id="btnUpload" />
+    <label id="imgget">
+
+    </label>
+</div>

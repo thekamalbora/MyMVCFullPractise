@@ -1,0 +1,219 @@
+﻿
+@{
+    Layout = null;
+}
+
+<script src="~/scripts/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+<script src="~/scripts/bootstrap.min.js"></script>
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<style>
+    .modal-dialog {
+        width: 360px;
+    }
+
+    #pagination a {
+        display: inline-block;
+        margin-right: 5px;
+    }
+</style>
+<link href="~/Content/Custome.css" rel="stylesheet" />
+<br /><br />
+<div id="pager">
+    <ul id="pagination" class="pagination-sm"></ul>
+</div>
+<div class="container">
+    <h2 class="text-center text-uppercase pt-4">Packet Master Form</h2>
+    <br />
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-10">
+            <div class="form-group row">
+                <label class="col-sm-10 col-lg-2 col-md-2">
+                    <input type="hidden" id="hfPacketID" value="0" />
+                    AWB N0<span style="color: red; font-size: 20px;">*</span>
+                </label>
+                <div class="col-sm-10 col-lg-4 col-md-4">
+                    <input type="text" id="txtawbno" class="form-control" autocomplete="off" placeholder="AWB Number" />
+                </div>
+                <label class="col-sm-10 col-lg-2 col-md-2">Client<span style="color: red; font-size: 20px;">*</span></label>
+                <div class="col-sm-10 col-lg-4 col-md-4">
+                    <input type="text" name="txtClinet" class="form-control" id="txtClinet" placeholder="Client Name" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="background-color:aquamarine">
+        <h2 class="pt-4">Consignor Details</h2>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-10">
+                <div class="form-group row">
+                    <label class="col-sm-10 col-lg-1 col-md-1">
+                        Name<span style="color: red; font-size: 20px;">*</span>
+                    </label>
+                    <div class="col-sm-10 col-lg-3 col-md-3">
+                        <input type="text" id="txtConsignerName" class="form-control" autocomplete="off" placeholder="Consigner Name" />
+                    </div>
+                    <label class="col-sm-10 col-lg-1 col-md-1">Country<span style="color: red; font-size: 20px;">*</span></label>
+                    <div class="col-sm-10 col-lg-3 col-md-3">
+                        <select id="ddlCountry" class="form-control" onchange="GetStateCode()">
+                            <option value="0">Select</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-10 col-lg-1 col-md-1">State<span style="color: red; font-size: 20px;">*</span></label>
+                    <div class="col-sm-10 col-lg-3 col-md-3">
+                        <select id="ddlState" class="form-control" onchange="GetCityCode()">
+                            <option value="0">Select</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-10">
+                <div class="form-group row">
+                    <label class="col-sm-10 col-lg-1 col-md-1">City<span style="color: red; font-size: 20px;">*</span></label>
+                    <div class="col-sm-10 col-lg-3 col-md-3">
+                        <select id="ddlCity" class="form-control"></select>
+                    </div>
+                    <label class="col-sm-10 col-lg-1 col-md-1">
+                        Pincode<span style="color: red; font-size: 20px;">*</span>
+                    </label>
+                    <div class="col-sm-10 col-lg-3 col-md-3">
+                        <input type="text" id="txtConsignerPincode" maxlength="6" class="form-control" autocomplete="off" placeholder="PinCode" />
+                    </div>
+                    <label class="col-sm-10 col-lg-1 col-md-1">Address<span style="color: red; font-size: 20px;">*</span></label>
+                    <div class="col-sm-10 col-lg-3 col-md-3">
+                        <input type="text" id="txtConsignerAddress" class="form-control" autocomplete="off" placeholder="Address" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-10">
+                <div class="form-group row">
+                    <label class="col-sm-10 col-lg-1 col-md-1">Phone<span style="color: red; font-size: 20px;">*</span></label>
+                    <div class="col-sm-10 col-lg-3 col-md-3">
+                        <input type="text" id="txtConsignerPhoneNumber" maxlength="10" class="form-control" autocomplete="off" placeholder="Phone Number" />
+                    </div>
+                    <label class="col-sm-10 col-lg-1 col-md-1">
+                        GST No<span style="color: red; font-size: 20px;">*</span>
+                    </label>
+                    <div class="col-sm-10 col-lg-3 col-md-3">
+                        <input type="text" id="txtConsignerGSTNumber" maxlength="15" class="form-control" autocomplete="off" placeholder="GST Number" />
+                    </div>
+                    <label class="col-sm-10 col-lg-1 col-md-1">Fax No<span style="color: red; font-size: 20px;">*</span></label>
+                    <div class="col-sm-10 col-lg-3 col-md-3">
+                        <input type="text" id="txtConsignerFaxNumber" maxlength="12" class="form-control" autocomplete="off" placeholder="Fax Number" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <span id="lbConsignorDetails"></span>
+        </div>
+    </div>
+    <div class="container-fluid" style="background-color:aquamarine">
+        <h2 class="pt-4">Consignee Details</h2>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-10">
+                <div class="form-group row">
+                    <label class="col-sm-10 col-lg-1 col-md-1">
+                        Name<span style="color: red; font-size: 20px;">*</span>
+                    </label>
+                    <div class="col-sm-10 col-lg-3 col-md-3">
+                        <input type="text" id="txtConsigneeName" class="form-control" autocomplete="off" placeholder="Consignee Name" />
+                    </div>
+                    <label class="col-sm-10 col-lg-1 col-md-1">Country<span style="color: red; font-size: 20px;">*</span></label>
+                    <div class="col-sm-10 col-lg-3 col-md-3">
+                        <select id="ddlConsigneeCountry" class="form-control" onchange="GetConsigneeStateCode()">
+                            <option value="0">Select</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-10 col-lg-1 col-md-1">State<span style="color: red; font-size: 20px;">*</span></label>
+                    <div class="col-sm-10 col-lg-3 col-md-3">
+                        <select id="ddlConsigneeState" class="form-control" onchange="GetConsigneeCityCode()">
+                            <option value="0">Select</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-10">
+                <div class="form-group row">
+                    <label class="col-sm-10 col-lg-1 col-md-1">City<span style="color: red; font-size: 20px;">*</span></label>
+                    <div class="col-sm-10 col-lg-3 col-md-3">
+                        <select id="ddlConsigneeCity" class="form-control"></select>
+                    </div>
+                    <label class="col-sm-10 col-lg-1 col-md-1">
+                        Pincode<span style="color: red; font-size: 20px;">*</span>
+                    </label>
+                    <div class="col-sm-10 col-lg-3 col-md-3">
+                        <input type="text" id="txtConsigneePincode" maxlength="6" class="form-control" autocomplete="off" placeholder="PinCode" />
+                    </div>
+                    <label class="col-sm-10 col-lg-1 col-md-1">Address<span style="color: red; font-size: 20px;">*</span></label>
+                    <div class="col-sm-10 col-lg-3 col-md-3">
+                        <input type="text" id="txtConsigneeAddress" class="form-control" autocomplete="off" placeholder="Address" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-10">
+                <div class="form-group row">
+                    <label class="col-sm-10 col-lg-1 col-md-1">Phone<span style="color: red; font-size: 20px;">*</span></label>
+                    <div class="col-sm-10 col-lg-3 col-md-3">
+                        <input type="text" id="txtConsigneePhoneNumber" maxlength="10" class="form-control" autocomplete="off" placeholder="Phone Number" />
+                    </div>
+                    <label class="col-sm-10 col-lg-1 col-md-1">
+                        GST No<span style="color: red; font-size: 20px;">*</span>
+                    </label>
+                    <div class="col-sm-10 col-lg-3 col-md-3">
+                        <input type="text" id="txtConsigneeGSTNumber" maxlength="15" class="form-control" autocomplete="off" placeholder="GST Number" />
+                    </div>
+                    <label class="col-sm-10 col-lg-1 col-md-1">Fax No<span style="color: red; font-size: 20px;">*</span></label>
+                    <div class="col-sm-10 col-lg-3 col-md-3">
+                        <input type="text" id="txtConsigneeFaxNumber" maxlength="12" class="form-control" autocomplete="off" placeholder="Fax Number" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <span id="lbConsigneeDetails"></span>
+        </div>
+    </div>
+    <div class="container-fluid" style="background-color:aquamarine">
+        <h2 class="pt-4">Packet Details</h2>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label class="col-sm-6 col-lg-4 col-md-4">No Of Packets<span style="color: red; font-size: 20px;">*</span> </label>
+                    <div class="col-sm-6 col-lg-4 col-md-4">
+                        <input type="text" id="txtNoOfControls" class="form-control" autocomplete="off" placeholder="No Of Packets" />
+                    </div>
+                </div>
+            </div>
+            <label id="lblPacketControls"></label>
+        </div>
+    </div>
+    <br />
+    <div>
+        <div class="text-center">
+            <button type="button" id="btnPacketSave" style="color:black;" class="btn btn-info">
+                <span class="glyphicon glyphicon-save"></span> Save
+            </button>
+            <button type="button" id="btnPacketRestAll" style="color:black;" class="btn btn-warning">
+                <span class="glyphicon glyphicon-refresh"></span> Reset
+            </button>
+        </div>
+    </div>
+    <script src="~/scripts/StateMaster.js"></script>
+    <script src="~/scripts/CityMaster.js"></script>
+    <script src="~/scripts/PacketMaster.js"></script>

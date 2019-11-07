@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = "StateMaster";
+}
+<script src="~/scripts/jquery.min.js"></script>
+<link href="~/Content/Custome.css" rel="stylesheet" />
+<br /><br />
+
+<div class="container">
+    <h2 class="text-center text-uppercase pt-4">State Master Form</h2>
+
+    <span style="color: red; font-size: 15px;">* This Field Is Mandatory For The User</span>
+    <fieldset class="border p-2 scheduler-border">
+
+        <legend class="w-auto">State Master</legend>
+        <form >
+            <div class="form-group row">
+            
+             
+                <div class="col-sm-10 col-lg-4 col-md-4">
+                    <input type="hidden"  id="hfStateID" value="0" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-10 col-lg-2 col-md-2">
+                    Country Name:-<span style="color: red; font-size: 20px;">*</span>
+                </label>
+                <div class="col-sm-10 col-lg-4 col-md-4">
+                    <select id="ddlCountry" class="form-control">
+                        <option value="0">Select</option>
+                    </select>
+                </div>
+                <label class="col-sm-10 col-lg-2 col-md-2">State Code</label>
+                <div class="col-sm-10 col-lg-4 col-md-4">
+                    <input type="text" id="txtStateCode" class="form-control" name="StateCode" placeholder="StateCode" autocomplete="off" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-10 col-lg-2 col-md-2">
+                    State Name<span style="color: red; font-size: 20px;">*</span>
+                </label>
+                <div class="col-sm-10 col-lg-4 col-md-4">
+                    <input type="text" id="txtStateName" class="form-control" autocomplete="off" name="StateName" placeholder="StateName"
+                          />
+                </div>
+                <label class="col-sm-10 col-lg-2 col-md-2">Active<span style="color: red; font-size: 20px;">*</span></label>
+                <div class="col-sm-10 col-lg-4 col-md-4">
+
+                    <input type="checkbox" class="form-check-input" value="0" id="chckIsAactive" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-9 col-lg-2 col-md-2 col-form-label"></label>
+                <div class="col-sm-10 col-lg-4 col-md-4">
+                    <input type="button" id="btnSave" value="Save" class="btn btn-success btn-lg " />
+                    <input type="button" id="btnreset" value="Reset" class="btn btn-danger btn-lg " onclick="Reset()" />
+                </div>
+            </div>
+
+        </form>
+
+    </fieldset>
+</div>
+
+<div class="container">
+    <h2 class="text-center text-uppercase pt-4">State Record</h2>
+    <hr class="w-50 mx-auto pb-3 border-dark" />
+    <table class="table table-responsive table-stripped mytable" id="tbl">
+        <tr>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Country&nbsp;Code</th>
+            <th scope="col">State&nbsp;Code</th>
+            <th scope="col">State&nbsp;Name</th>
+            <th scope="col">IsActive</th>
+
+        </tr>
+    </table>
+</div>
+<div class="=container col-6">
+    <label id="lbCountryDetails"></label>
+</div>
+
+<div id="tableDiv"></div>
+<script src="~/scripts/StateMaster.js"></script>
